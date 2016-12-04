@@ -9,7 +9,9 @@ if ($mysqli->connect_error) {
 }
 
 $sql = array( 
-	"CREATE DATABASE IF NOT EXISTS " . DB,
+	"DROP DATABASE IF EXISTS " . DB;
+
+	"CREATE DATABASE " . DB,
 
 	"use " . DB,
 	
