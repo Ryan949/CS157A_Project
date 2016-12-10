@@ -30,7 +30,7 @@ if(isset($_GET["table"]) && $error == null){
 	$result = $mysqli->query("select * from ". $_GET["table"]);
 }
 else if(isset($_GET["query"]) && $error == null){
-	
+
 	switch($_GET["query"]){
 		case "1" : $sql = "SELECT s.Price, s.Symbol FROM Stock as s, Company as c WHERE c.CompanyName = s.CompanyName;"; break;
 		case "2" : $sql = "SELECT SUM(PRICE) AS 'Total Price of all Stocks Combined' FROM Stock;"; break;
@@ -42,7 +42,7 @@ else if(isset($_GET["query"]) && $error == null){
 		case "7" : $sql = "SELECT c.CompanyName From Company c GROUP BY c.CompanyName HAVING COUNT(EmployeeSize) > 10000;"; break;
 		case "8" : $sql = "Select Count(Distinct Price) as Prices From Stock;"; break;
 		case "9" : $sql = null; break;
-		default:   $sql = null;		
+		default:   $sql = null;
 	}
 	if(isset($sql)){
 		if(!($result = $mysqli->query($sql))){
@@ -59,7 +59,7 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 	else if( strpos(trim(trim($adhoc),";"), ";") !== false){
 		$error = "Only one statement allowed";
 	}
-	else{		
+	else{
 		$sql = $adhoc;
 		if(!($result = $mysqli->query($sql))){
 			$error = $mysqli->error;
@@ -74,65 +74,74 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="./src/style/style.css">
-		<script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="./src/css/style.css">
+    <link rel="stylesheet" type="text/css" href="./src/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+    <script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+    <script>
 			function clearTextArea(){
 				document.getElementById("adhoc").value = '';
 			}
 		</script>
 	</head>
 	<body>
-		<h1><?php echo $project_name; ?></h1>
-		<p>Team Members: <?php // Print group member names
+		<h1 class="text-center"><?php echo $project_name; ?></h1>
+		<p class="text-center">Team Members: <?php // Print group member names
 			foreach($team_members as $key=>$value){
 				if($key != 0) echo ", ";
 				echo $value;
 			} ?>
 		</p>
-		
+
 		<hr>
-		
-		<h2>Relations</h2>
-		<ol>
-			<?php 
+
+		<h2 class="text-center">Relations</h2>
+		<ul class="text-center list-unstyled">
+			<?php
 				foreach($relations as &$value){ // Print the names of the tables as GET links
 					echo "<li><a href=\"./?table=$value&/#Output\">".ucwords($value)."</a></li>";
 				}
 			?>
-		</ol>
-		
+		</ul>
+
 		<hr>
-		
-		<h2>Queries</h2>
-		<ol>
+
+		<h2 class="text-center">Queries</h2>
+		<ul class="text-center list-unstyled">
 			<li><a href="./?query=1&/#Output">No. 1</a></li>
-			<li><a href="./?query=2&/#Output">No. 2</a></li>
-			<li><a href="./?query=3&/#Output">No. 3</a></li>
-			<li><a href="./?query=4&/#Output">No. 4</a></li>
+			<li><a href="./?query=2&/#Output">Total Price of all Stocks Combined</a></li>
+			<li><a href="./?query=3&/#Output">Number of Company Stock’s Above $10</a></li>
+			<li><a href="./?query=4&/#Output">Average Price of Stock</a></li>
 			<li><a href="./?query=5&/#Output">No. 5</a></li>
 			<li><a href="./?query=6&/#Output">No. 6</a></li>
 			<li><a href="./?query=7&/#Output">No. 7</a></li>
 			<li><a href="./?query=8&/#Output">No. 8</a></li>
-		</ol>
-		
+		</ul>
+
 		<hr>
-		
-		<h2>Ad-hoc Query</h2>
-		<form id="input" method="POST" action="./#Output" >
+
+		<h2 class="text-center">Ad-hoc Query</h2>
+		<form id="input" method="POST" action="./#Output" class="text-center" >
 			<textarea rows="3" cols="50" name="adhoc" id="adhoc" placeholder="Place your query here"
 				><?php if(isset($_POST["adhoc"])) echo $_POST["adhoc"];?></textarea>
 			<br>
 			<input type="Button" onfocus="clearTextArea();" value="Clear">
 			<input type="Submit" name="Submit">
 		</form>
-		
+
 		<?php // Output
 			if($result or $error) {
 				?>
 				<br>
 				<hr>
-				
-				<h2>
+
+				<h2 class="text-center">
 					<span id="Output">Output</span>
 				</h2>
 				<?php
@@ -140,15 +149,15 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 					echo "Error: ". $error;
 				}
 				else{ ?>
-					<table>
-						<?php 
+					<table class="text-center">
+						<?php
 							// Render the DB table names to the html table
 							echo "<tr>\n";
 							while ($info = $result->fetch_field()) {
 								echo "<th>$info->name</th>\n";
 							}
 							echo "</tr>";
-							
+
 							// Render the row data into the html table
 							while($row = $result->fetch_array(MYSQLI_NUM)){
 								echo "<tr>\n";
@@ -163,13 +172,6 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 				}
 			}
 		?>
-		
+
 	</body>
 </html>
-
-
-
-
-
-
-

@@ -1,7 +1,11 @@
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    border-radius: 5px;
+    width: 50%;
+    margin: 0px auto;
+    float: none;
+    margin-bottom: 5%;    
 }
 
 td, th {
