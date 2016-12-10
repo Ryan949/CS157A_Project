@@ -173,5 +173,7 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 			}
 		?>
 
+    <img style="padding-left:33%" src="dog.jpg" alt="dog">
+    <img style="padding-left:40%" src="broccoli.jpeg" alt="broccoli">
 	</body>
 </html>
