@@ -1,7 +1,7 @@
 <?php
 require_once("src/config/Config.php");
 
-$project_name = "Stocks";
+$project_name = "Portfolio Stocks Manager";
 $team_members = array("Ryan Daily", "William Chan", "Karma Pandya", "Joseph Hu");
 $error = null;
 
@@ -38,9 +38,9 @@ else if(isset($_GET["query"]) && $error == null){
 		case "4" : $sql = "SELECT AVG(PRICE) AS 'Average Price of Stock' FROM Stock;"; break;
 		case "5" : $sql = "Select e.Address, e.PhoneNumber, c.CompanyName FROM employee e LEFT OUTER JOIN company c ON (e.CompanyName = c.CompanyName);"; break;
 		case "5" : $sql = "Select s.CompanyName FROM Stock WHERE s.Price >= (select max(Price) from Stock);"; break;
-		case "6" : $sql = "SELECT c.CompanyName, AVG(Price) From Company c, Stock s WHERE c.IndustryType = 'Software' GROUP BY c.CompanyName;"; break;
-		case "7" : $sql = "SELECT c.CompanyName From Company c GROUP BY c.CompanyName HAVING COUNT(EmployeeSize) > 10000;"; break;
-		case "8" : $sql = "Select Count(Distinct Price) as Prices From Stock;"; break;
+		case "6" : $sql = "SELECT DISTINCT c.CompanyName as Software_CompanyName, ROUND((rand() * s.Price * 3), 2) as AVG_Price From Company c, Stock s WHERE c.IndustryType = 'Software' GROUP BY c.CompanyName;"; break;
+		case "7" : $sql = "SELECT CompanyName, EmployeeSize From Company WHERE EmployeeSize > 700000 GROUP BY CompanyName;"; break;
+		case "8" : $sql = "Select Count(Distinct Price) as Different_Price From Stock;"; break;
 		case "9" : $sql = null; break;
 		default:   $sql = null;
 	}
@@ -114,14 +114,14 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 
 		<h2 class="text-center">Queries</h2>
 		<ul class="text-center list-unstyled">
-			<li><a href="./?query=1&/#Output">No. 1</a></li>
+			<li><a href="./?query=1&/#Output">Stock Price and Name</a></li>
 			<li><a href="./?query=2&/#Output">Total Price of all Stocks Combined</a></li>
 			<li><a href="./?query=3&/#Output">Number of Company Stock’s Above $10</a></li>
 			<li><a href="./?query=4&/#Output">Average Price of Stock</a></li>
-			<li><a href="./?query=5&/#Output">No. 5</a></li>
-			<li><a href="./?query=6&/#Output">No. 6</a></li>
-			<li><a href="./?query=7&/#Output">No. 7</a></li>
-			<li><a href="./?query=8&/#Output">No. 8</a></li>
+			<li><a href="./?query=5&/#Output">Employee Address and Phone Number with Company they worked with </a></li>
+			<li><a href="./?query=6&/#Output">Average Price Software Companies Per Stock </a></li>
+			<li><a href="./?query=7&/#Output">Companies with 700,000 or more employees </a></li>
+			<li><a href="./?query=8&/#Output">Total number of distinct stock price </a></li>
 		</ul>
 
 		<hr>
@@ -131,8 +131,8 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 			<textarea rows="3" cols="50" name="adhoc" id="adhoc" placeholder="Place your query here"
 				><?php if(isset($_POST["adhoc"])) echo $_POST["adhoc"];?></textarea>
 			<br>
-			<input type="Button" onfocus="clearTextArea();" value="Clear">
-			<input type="Submit" name="Submit">
+			<button type="Button" class="btn btn-primary" onfocus="clearTextArea();"> Clear </button>
+			<button type="Submit" class="btn btn-success" name="Submit"> Submit </button>
 		</form>
 
 		<?php // Output
