@@ -5,7 +5,7 @@ table {
     width: 50%;
     margin: 0px auto;
     float: none;
-    margin-bottom: 5%;    
+    margin-bottom: 5%;
 }
 
 td, th {
@@ -16,4 +16,26 @@ td, th {
 
 tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+.homeButton {
+    font-size: 300%;
+}
+
+ .listOfTables { text-align: center; list-style-position:inside;  list-style: none;}
+
+ .listOfTables > li {
+   margin:1% auto;
+ }
+
+#form {
+  width:50%;
+  /*text-align:center;*/
+  margin:0 auto;
+}
+
+div#report {
+  width: 50%;
+  height: 30px;
+  margin: 0 auto;
 }

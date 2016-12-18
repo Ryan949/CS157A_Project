@@ -67,8 +67,6 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 	}
 }
 
-
-
 // Render the html page
 ?>
 <!DOCTYPE html>
@@ -126,13 +124,20 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 
 		<hr>
 
+    <h2 class="text-center"> Extra Functionality </h2>
+    <ul class="text-center list-unstyled">
+      <li><a href="insert.php"> Insert</a></li>
+    </ul>
+
 		<h2 class="text-center">Ad-hoc Query</h2>
 		<form id="input" method="POST" action="./#Output" class="text-center" >
 			<textarea rows="3" cols="50" name="adhoc" id="adhoc" placeholder="Place your query here"
 				><?php if(isset($_POST["adhoc"])) echo $_POST["adhoc"];?></textarea>
 			<br>
-			<button type="Button" class="btn btn-primary" onfocus="clearTextArea();"> Clear </button>
-			<button type="Submit" class="btn btn-success" name="Submit"> Submit </button>
+      <div style="margin-top:1%; padding-bottom:2%">
+        <button type="Button" class="btn btn-primary" onfocus="clearTextArea();"> Clear </button>
+        <button type="Submit" class="btn btn-success" name="Submit"> Submit </button>
+      </div>
 		</form>
 
 		<?php // Output
@@ -172,13 +177,5 @@ else if(!empty($_POST["adhoc"]) && $error == null){
 				}
 			}
 		?>
-
-    <img style="padding-left:33%" src="dog.jpg" alt="dog">
-    <hr>
-    <img style="padding-left:40%" src="broccoli.jpeg" alt="broccoli">
-    <hr>
-    <img style="padding-left:40%" src="beer.jpg"  alt="beer">
-    <hr>
-    <img style="padding-left:40%" src="cashMoney.jpeg" alt="money">
 	</body>
 </html>
